@@ -81,6 +81,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ onSubmit }) => {
           URL:
           <input type="text" {...register('url', { required: true })} />
         </label>
+        <button type="submit">Send Request</button>
+        
         <div style={{ display: 'flex' }}>
           <label>
             Headers (JSON):
@@ -95,7 +97,6 @@ const RequestForm: React.FC<RequestFormProps> = ({ onSubmit }) => {
             <textarea {...register('jsonData')} />
           </label>
         </div>
-        <button type="submit">Send Request</button>
 
       </form>
     </Container>
