@@ -10,6 +10,7 @@ export default function Home() {
     <>
       <Container>
         <Typography textAlign={'center'} sx={{ my: 5 }}>Home Page</Typography>
+        Wanna get responses for your apis? Go to api network <Link href={'/apinetwork'}>Get API Responses</Link>
       </Container>
     </>
   );
