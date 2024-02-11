@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Container>
         <Typography textAlign={'center'} sx={{ my: 5 }}>Home Page</Typography>
-        <p style={{ textAlign: 'center' }}>Wanna get responses for your apis? Go to api network <Link href={'/apinetwork'}>Get API Responses</Link></p>
+        <p style={{ textAlign: 'center' }}>Wanna get responses for your apis? Go to api network <Link href={'/ApiNetwork'}>Get API Responses</Link></p>
         <Lottie
           animationData={avatarloader}
           loop

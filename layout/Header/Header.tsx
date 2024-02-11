@@ -33,7 +33,7 @@ const drawerWidth = 240;
 const routeComponents = [
     { name: "Home", path: "/" },
     { name: "Workspaces", path: "/workspaces" },
-    { name: "API Network", path: "/apinetwork" }
+    { name: "API Network", path: "/ApiNetwork" }
 ]
 
 

@@ -1,28 +1,26 @@
-import { Container } from '@mui/material';
-import React from 'react';
+import { IAxiosResponse } from "@/typescript/interface/api";
+import { Container } from "@mui/material";
+import React from "react";
 
-interface ResponseViewerProps {
-  response: any;
-}
-
-const ResponseViewer: React.FC<ResponseViewerProps> = ({ response }) => {
+type Props = {
+  response?: IAxiosResponse;
+};
+const ResponseField = ({ response }: Props) => {
   if (!response) {
-    return <div>
-      <Container>
-
-        <p style={{}}>
-          No response available
-        </p>
-      </Container>
-    </div>;
+    return (
+      <div>
+        <Container>
+          <p style={{}}>No response available</p>
+        </Container>
+      </div>
+    );
   }
-
-  const { status, data, headers } = response;
+  const { data, status, headers } = response;
+  console.log(data);
 
   return (
     <div>
       <Container>
-
         <h2>Response</h2>
         <div>Status: {status}</div>
         <div>Data:</div>
@@ -34,4 +32,4 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ response }) => {
   );
 };
 
-export default ResponseViewer;
+export default ResponseField;

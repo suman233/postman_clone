@@ -6,19 +6,6 @@ import React, { useState } from 'react'
 
 
 const apinetwork = () => {
-    // const RequestForm: React.FC<RequestFormProps> = ({ onSubmit }) => {
-
-    const [response, setResponse] = useState<any>(null);
-
-    const handleSubmit = async (data: any) => {
-        try {
-            const apiResponse = await axios.get(data.url);
-            setResponse(apiResponse);
-        } catch (error) {
-            console.error('Error:', error);
-            setResponse(null);
-        }
-    };
 
     // const handleSubmit = async (data: any) => {
     //     try {
@@ -43,8 +30,8 @@ const apinetwork = () => {
     return (
         <div>
             <Container>
-                <RequestForm onSubmit={handleSubmit} />
-                <ResponseViewer response={response} />
+                <RequestForm  />
+                
             </Container>
         </div>
     )
