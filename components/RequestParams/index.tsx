@@ -62,17 +62,16 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
     <div>
       <Box>
         <Typography sx={{ mb: 3, fontWeight: "bold" }}>Query Params</Typography>
-        <div style={{ display: "flex" }}>
-          {mapTextFields()}
-          <Button
-            onClick={handleSubmit}
-            size="small"
-            variant="contained"
-            sx={{ ml: 2, height: 50, backgroundColor: "orange" }}
-          >
-            Add
-          </Button>
-        </div>
+        {mapTextFields()}
+
+        <Button
+          onClick={handleSubmit}
+          size="small"
+          variant="contained"
+          sx={{ height: 50, backgroundColor: "orange" }}
+        >
+          Add
+        </Button>
       </Box>
     </div>
   );
