@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { TState } from "../RequestForm/RequestForm";
 import useAddParams, { ParamsType } from "@/Hooks/useAddParams";
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 
 type Props = {
   urlstate: TState;
@@ -43,8 +44,23 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             name="key"
             label="API KEY"
             variant="outlined"
-            sx={{ mr: 2, backgroundColor: "#f2f6f7" }}
+            sx={{ mr: 2, backgroundColor: "#f2f6f7", color: 'black' }}
             onChange={handleChange}
+            InputLabelProps={{
+              sx: {
+                // set the color of the label when not shrinked
+                color: "black",
+                [`&.${inputLabelClasses.shrink}`]: {
+                  // set the color of the label when shrinked (usually when the TextField is focused)
+                  color: "orange"
+                }
+              }
+            }}
+            InputProps={{
+              sx: {
+                  color: 'black'
+                }
+            }}
           />
           <TextField
             id="outlined-basic"
@@ -53,6 +69,21 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             variant="outlined"
             sx={{ backgroundColor: "#f2f6f7" }}
             onChange={handleChange}
+            InputLabelProps={{
+              sx: {
+                // set the color of the label when not shrinked
+                color: "black",
+                [`&.${inputLabelClasses.shrink}`]: {
+                  // set the color of the label when shrinked (usually when the TextField is focused)
+                  color: "orange"
+                }
+              }
+            }}
+            InputProps={{
+              sx: {
+                  color: 'black'
+                }
+            }}
           />
         </div>
       );

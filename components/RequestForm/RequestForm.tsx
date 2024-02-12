@@ -8,6 +8,7 @@ import ResponseField from "../ResponseTab/ResponseField";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { IAxiosResponse } from "@/typescript/interface/api";
 import RequestParams from "../RequestParams";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 
 export type TState = {
   url: string;
@@ -41,7 +42,7 @@ const RequestForm = () => {
           {/* <select {...register('method')}> */}
           <Select
             defaultValue={"GET"}
-            sx={{ backgroundColor: "whitesmoke", width: "10%" }}
+            sx={{ backgroundColor: "whitesmoke", color: 'black', width: "10%" }}
           >
             <MenuItem value={"GET"}>GET</MenuItem>
             <MenuItem value="POST">POST</MenuItem>
@@ -62,6 +63,11 @@ const RequestForm = () => {
               mx: 2,
               borderRadius: 2,
               width: "60%",
+            }}
+            InputProps={{
+              sx:{
+                color:'black'
+              }
             }}
           />
           <Button
@@ -94,15 +100,45 @@ const RequestForm = () => {
           <Typography sx={{ my: 3, fontWeight: "bold" }}>Headers</Typography>
           <TextField
             id="outlined-basic"
-            label="API KEY"
+            label="X-ACCESS TOKEN"
             variant="outlined"
-            sx={{ mr: 2, backgroundColor: "#f2f6f7" }}
+            sx={{ mr: 2, backgroundColor: "#f2f6f7", color: 'black' }}
+            InputLabelProps={{
+              sx: {
+                // set the color of the label when not shrinked
+                color: "black",
+                [`&.${inputLabelClasses.shrink}`]: {
+                  // set the color of the label when shrinked (usually when the TextField is focused)
+                  color: "orange"
+                }
+              }
+            }}
+            InputProps={{
+              sx:{
+                color:'black'
+              }
+            }}
           />
           <TextField
             id="outlined-basic"
             label="VALUE"
             variant="outlined"
-            sx={{ backgroundColor: "#f2f6f7" }}
+            sx={{ backgroundColor: "#f2f6f7", color: 'black' }}
+            InputLabelProps={{
+              sx: {
+                // set the color of the label when not shrinked
+                color: "black",
+                [`&.${inputLabelClasses.shrink}`]: {
+                  // set the color of the label when shrinked (usually when the TextField is focused)
+                  color: "orange"
+                }
+              }
+            }}
+            InputProps={{
+              sx:{
+                color:'black'
+              }
+            }}
           />
           <Button
             size="small"
