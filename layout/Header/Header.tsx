@@ -86,7 +86,10 @@ export default function Header(props: Props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-
+            <Typography variant="h6" sx={{ mx: 2, my: 2, color: '#ebba34', fontWeight: 'bold' }}>
+                POSTMAN
+            </Typography>
+            <Divider />
             <List>
                 {routeComponents.map((item, index) => (
                     <ListItem key={index} disablePadding>
@@ -109,7 +112,6 @@ export default function Header(props: Props) {
                 <CssBaseline />
                 <AppBar component="nav" sx={{ backgroundColor: 'whitesmoke', }}>
                     <Toolbar>
-                        <img src={assest.logo} alt="" height={50} />
 
                         <Box sx={{ flexGrow: 0 }}>
 
@@ -120,10 +122,14 @@ export default function Header(props: Props) {
                                 onClick={handleDrawerToggle}
                                 sx={{ display: { sm: 'none' } }}
                             >
-                                <MenuIcon sx={{ color: 'black' }} />
-                            </IconButton>
+                                <img src={assest.logo} alt="" height={50} />
 
+                                {/* <MenuIcon sx={{ color: 'black' }} /> */}
+                            </IconButton>
+                            
+                            
                             <Box sx={{ display: { xs: 'none', sm: 'block' }, }}>
+                            
                                 {routeComponents.map((item, i) => (
                                     <Link href={item?.path}><Button key={i} sx={{ color: '#000', textTransform: 'none', '&:hover': { backgroundColor: 'lightgray' } }}>
                                         {item?.name}
@@ -158,11 +164,11 @@ export default function Header(props: Props) {
 
                         <Paper
                             component="form"
-                            sx={{ p: '2px 4px', ml: 35, mr: 60, display: 'flex', alignItems: 'center', width: 200, textAlign: 'center', flexGrow: 1 }}
+                            sx={{ p: '2px 4px', display: 'flex', mx:10, width: 200, textAlign: 'center', flexGrow: 1 }}
                         >
 
                             <InputBase
-                                sx={{ margin: 'auto', flex: 1, backgroundColor:'white', color:'black' }}
+                                sx={{ margin: 'auto', flex: 1, backgroundColor: 'white', color: 'black' }}
                                 placeholder="Search API"
                                 inputProps={{ 'aria-label': 'search apis' }}
                             />

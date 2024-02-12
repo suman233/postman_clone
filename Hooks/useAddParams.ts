@@ -10,7 +10,6 @@ export type ParamsType = {
 };
 
 const useAddParams = (paramsArr: ParamsType[] | [], url: string): string => {
-  console.log(paramsArr);
   let str = url;
 //   let count = 0;
   paramsArr.forEach((item, idx) => {

@@ -4,9 +4,9 @@ import axios from "axios";
 
 
 
-export const fetchAPI = async (data: TState): Promise<IAxiosResponse> => {
+export const fetchAPI = async (url:string): Promise<IAxiosResponse> => {
   try {
-    const response = await axios.get(data.url);
+    const response = await axios.get(url);
     return response;
   } catch (error: any) {
     throw new Error("Error while fetching data", error);

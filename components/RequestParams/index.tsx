@@ -8,32 +8,44 @@ import { inputLabelClasses } from "@mui/material/InputLabel";
 type Props = {
   urlstate: TState;
   setUrlState: React.Dispatch<React.SetStateAction<TState>>;
+  handleChangeParams?: (newParams: Record<string, string>) => void
 };
 // {key: "abc", value: "123"}, {key: "xyz", value: "456"}
 
-const RequestParams = ({ urlstate, setUrlState }: Props) => {
-  const [finalParamsList, setFinalParamsList] = useState<ParamsType[]>([]);
-  const [textValue, setTextValue] = useState({ key: "", value: "" });
-  const [paramsTextFields, setParamsTextFields] = useState([0]);
-  const finalUrl = useAddParams(finalParamsList, urlstate.url);
-  console.log(finalUrl);
+const RequestParams = ({ urlstate, setUrlState, handleChangeParams }: Props) => {
+  const [paramsTextFields, setParamsTextFields] = useState<{ key: string, value: string }[]>([]);
 
   //   useEffect(() => {
   //   }, [finalUrl]);
 
   const handleSubmit = () => {
-    // dbwefewf?name=dbd&email=bdbchd
-    setParamsTextFields((prev) => [...prev, 0]);
-    setFinalParamsList((prev) => [...prev, textValue]);
-    setTextValue({ key: "", value: "" });
-    setUrlState({ url: finalUrl });
+    // dbwefewf?name=dbd&email=bcd
+    setParamsTextFields((prev) => [...prev, { key: "", value: "" }]);
   };
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setTextValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    (index: number, propName: keyof typeof paramsTextFields[number]) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
+      setParamsTextFields((prev) => {
+        const newData = [...prev];
+        const foundData = newData?.[index];
+        if (foundData) {
+          newData[index] = { ...foundData, [propName]: e.target.value }
+        }
+
+        const newObject: Record<string, string> = {}
+        newData?.forEach((item) => {
+          newObject[item.key] = item.value
+        })
+        handleChangeParams?.(newObject);
+
+        return newData
+      })
     },
     []
   );
+
+
+
 
   const mapTextFields = (): React.JSX.Element[] => {
     return paramsTextFields.map((item, i) => {
@@ -45,7 +57,8 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             label="API KEY"
             variant="outlined"
             sx={{ mr: 2, backgroundColor: "#f2f6f7", color: 'black' }}
-            onChange={handleChange}
+            onChange={handleChange(i, "key")}
+            value={item?.key}
             InputLabelProps={{
               sx: {
                 // set the color of the label when not shrinked
@@ -58,8 +71,8 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             }}
             InputProps={{
               sx: {
-                  color: 'black'
-                }
+                color: 'black'
+              }
             }}
           />
           <TextField
@@ -68,7 +81,8 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             label="VALUE"
             variant="outlined"
             sx={{ backgroundColor: "#f2f6f7" }}
-            onChange={handleChange}
+            onChange={handleChange(i, "value")}
+            value={item?.value}
             InputLabelProps={{
               sx: {
                 // set the color of the label when not shrinked
@@ -81,8 +95,8 @@ const RequestParams = ({ urlstate, setUrlState }: Props) => {
             }}
             InputProps={{
               sx: {
-                  color: 'black'
-                }
+                color: 'black'
+              }
             }}
           />
         </div>

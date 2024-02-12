@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import SendIcon from "@mui/icons-material/Send";
@@ -12,10 +12,12 @@ import { inputLabelClasses } from "@mui/material/InputLabel";
 
 export type TState = {
   url: string;
+  params: Record<string, string>
 };
 const RequestForm = () => {
   const [urlstate, setUrlState] = React.useState<TState>({
     url: "",
+    params: {}
   });
 
   const [apiResp, setApiResp] = useState<IAxiosResponse>();
@@ -24,14 +26,31 @@ const RequestForm = () => {
   ) => {
     setUrlState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const handleChangeParams = (newParams: Record<string, string>) => {
+    console.log(newParams, "newParams")
+    setUrlState((prevState) => {
+      return {
+        ...prevState, params: newParams
+      }
+    })
+  }
 
+  const visibleUrl = useMemo(() => {
+    const params = Object.entries(urlstate?.params)?.filter(([key]) => key !== "")?.map(([key, value], index) => {
+
+      return `${index === 0 ? "?" : ""}${key}=${value}`
+    })
+    return urlstate?.url + params?.join("&")
+  }, [urlstate]);
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const value = await fetchAPI(urlstate);
+    const value = await fetchAPI(visibleUrl);
     setApiResp(value);
     console.log(value);
   };
+
 
   return (
     <>
@@ -54,7 +73,7 @@ const RequestForm = () => {
             id="outlined-size-small"
             type="text"
             name="url"
-            value={urlstate.url}
+            value={visibleUrl}
             onChange={handleChange}
             // {...register("url", { required: true })}
             // defaultValue={'https://fakestoreapi.com/products'}
@@ -65,8 +84,8 @@ const RequestForm = () => {
               width: "60%",
             }}
             InputProps={{
-              sx:{
-                color:'black'
+              sx: {
+                color: 'black'
               }
             }}
           />
@@ -94,7 +113,7 @@ const RequestForm = () => {
           </label>
         </div> */}
 
-        <RequestParams urlstate={urlstate} setUrlState={setUrlState} />
+        <RequestParams urlstate={urlstate} setUrlState={setUrlState} handleChangeParams={handleChangeParams} />
 
         <Box>
           <Typography sx={{ my: 3, fontWeight: "bold" }}>Headers</Typography>
@@ -114,8 +133,8 @@ const RequestForm = () => {
               }
             }}
             InputProps={{
-              sx:{
-                color:'black'
+              sx: {
+                color: 'black'
               }
             }}
           />
@@ -135,8 +154,8 @@ const RequestForm = () => {
               }
             }}
             InputProps={{
-              sx:{
-                color:'black'
+              sx: {
+                color: 'black'
               }
             }}
           />

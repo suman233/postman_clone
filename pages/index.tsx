@@ -129,14 +129,15 @@ export default function Home() {
                         fontWeight: 'medium',
                         lineHeight: '20px',
                         mb: '2px',
+                        color: 'black'
                       }}
                       secondaryTypographyProps={{
                         noWrap: true,
                         fontSize: 12,
                         lineHeight: '16px',
-                        color: open ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.5)',
+                        color: open ? 'black' : 'rgba(255,255,255,0.5)',
                       }}
-                      sx={{ my: 0 }}
+                      sx={{ my: 0, color:'black' }}
                     />
                     <KeyboardArrowDown
                       sx={{
@@ -168,21 +169,21 @@ export default function Home() {
             <Divider sx={{ mx: 3 }} />
 
             <List sx={{ width: '100%', }}>
-              <ListItem sx={{ height: '50px' }}>
+              <ListItem sx={{ height: '50px', color: 'black' }}>
 
-                <ListItemText secondary='What is Postman?' />
+                <ListItemText sx={{color: 'black',}} >What is Postman? </ListItemText>
               </ListItem>
               <ListItem>
-                <ListItemText secondary='Support Center' />
+                <ListItemText sx={{color: 'black',}} >Support Center </ListItemText> 
               </ListItem>
               <ListItem>
-                <ListItemText secondary='Learning Center' />
+                <ListItemText sx={{color: 'black',}} >Learning Center </ListItemText> 
               </ListItem>
               <ListItem>
-                <ListItemText secondary='Postman Enterprise' />
+                <ListItemText sx={{color: 'black',}} >Postman Enterprise </ListItemText> 
               </ListItem>
               <ListItem>
-                <Link href={'https://www.postman.com/downloads/'} style={{ textDecoration: 'none' }}> <ListItemText secondary='Download Postman' /></Link>
+                <Link href={'https://www.postman.com/downloads/'} style={{ textDecoration: 'none' }}> <ListItemText>Download Postman</ListItemText></Link>
               </ListItem>
             </List>
 
@@ -196,7 +197,7 @@ export default function Home() {
 
             </Typography>
             <Divider sx={{ mx: 3 }} />
-            <div style={{ marginLeft: 14 }} >
+            <div style={{ marginLeft: 14, backgroundColor:'lightgray' , height:'50px'}} >
               <div style={{ float: 'left' }}>
                 <Typography component={Link} href={''} sx={{ textDecoration: 'none', color: 'black', fontSize: '14px' }}>
                   <IconButton>
@@ -221,7 +222,7 @@ export default function Home() {
                   <>
                     <Grid item xs={4}>
 
-                      <Card variant="outlined" sx={{ width: 250, height: 180 }}>
+                      <Card variant="outlined" sx={{ width: 250, height: 180, backgroundColor:'whitesmoke' }}>
                         <CardActionArea>
 
                           <Box sx={{ paddingTop: 2, paddingLeft: 2, }}>
@@ -230,13 +231,13 @@ export default function Home() {
                           </Box>
                           <CardContent>
 
-                            <Typography sx={{ fontSize: 14 }} color="h6" gutterBottom>
+                            <Typography sx={{ fontSize: 14, color: 'black' }} color="h6" gutterBottom>
                               {i.name}
                             </Typography>
                             <Typography variant="h5" component="div">
 
                             </Typography>
-                            <Typography sx={{ fontSize: 12, mb: 1.5 }} color="text.secondary">
+                            <Typography sx={{ fontSize: 12, mb: 1.5, color:'black' }} color="text.secondary">
                               {i.text}
                             </Typography>
                           </CardContent>
