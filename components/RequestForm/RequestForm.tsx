@@ -3,52 +3,78 @@ import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import SendIcon from "@mui/icons-material/Send";
 import Select from "@mui/material/Select";
-import { fetchAPI } from "@/utils/apinetwork";
+import { fetchAPI, postAPI } from "@/utils/apinetwork";
 import ResponseField from "../ResponseTab/ResponseField";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { IAxiosResponse } from "@/typescript/interface/api";
 import RequestParams from "../RequestParams";
 import { inputLabelClasses } from "@mui/material/InputLabel";
+import RequestBody from "../RequestBody";
+import RequestHeaders from "../RequestHeaders";
 
 export type TState = {
   url: string;
-  params: Record<string, string>
+  // params: Record<string, string>
 };
+const activeCss = {
+  padding: "15px 30px",
+  marginRight: "15px",
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  cursor: "pointer",
+  color: "black",
+};
+
+const inActiveCss = {
+  padding: "15px 30px",
+  marginRight: "15px",
+  cursor: "pointer",
+};
+
 const RequestForm = () => {
   const [urlstate, setUrlState] = React.useState<TState>({
     url: "",
-    params: {}
   });
 
+  const [jsonData, setJsonData] = useState("");
+  const [apiSelectedMethod, setApiSelectedMethod] = useState("GET");
   const [apiResp, setApiResp] = useState<IAxiosResponse>();
+
+  const [currentTab, setCurrentTab] = useState(0);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setUrlState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleChangeParams = (newParams: Record<string, string>) => {
-    console.log(newParams, "newParams")
-    setUrlState((prevState) => {
-      return {
-        ...prevState, params: newParams
-      }
-    })
-  }
 
-  const visibleUrl = useMemo(() => {
-    const params = Object.entries(urlstate?.params)?.filter(([key]) => key !== "")?.map(([key, value], index) => {
-
-      return `${index === 0 ? "?" : ""}${key}=${value}`
-    })
-    return urlstate?.url + params?.join("&")
-  }, [urlstate]);
-  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const value = await fetchAPI(visibleUrl);
+    let value;
+    if (apiSelectedMethod === "GET") {
+      let response = await fetchAPI(urlstate);
+      value = {
+        data: response.data,
+        headers: response.headers,
+        status: response.status,
+      };
+    } else if ("POST") {
+      if (!jsonData.length)
+        return alert("Please provide a body in JSON format");
+      let response = await postAPI({
+        method: apiSelectedMethod,
+        url: urlstate.url,
+        jsonData: jsonData,
+      });
+      value = {
+        data: response.data,
+        headers: response.headers,
+        status: response.status,
+      };
+    }
+
     setApiResp(value);
-    console.log(value);
   };
 
 
@@ -62,6 +88,7 @@ const RequestForm = () => {
           <Select
             defaultValue={"GET"}
             sx={{ backgroundColor: "whitesmoke", color: 'black', width: "10%" }}
+            onChange={(e) => setApiSelectedMethod(e.target.value)}
           >
             <MenuItem value={"GET"}>GET</MenuItem>
             <MenuItem value="POST">POST</MenuItem>
@@ -73,7 +100,7 @@ const RequestForm = () => {
             id="outlined-size-small"
             type="text"
             name="url"
-            value={visibleUrl}
+            value={urlstate.url}
             onChange={handleChange}
             // {...register("url", { required: true })}
             // defaultValue={'https://fakestoreapi.com/products'}
@@ -98,6 +125,35 @@ const RequestForm = () => {
           </Button>
         </div>
 
+        <div style={{ display: "flex" }}>
+          <div
+            style={currentTab === 0 ? activeCss : inActiveCss}
+            onClick={() => setCurrentTab(0)}
+          >
+            Params
+          </div>
+          <div
+            style={currentTab === 1 ? activeCss : inActiveCss}
+            onClick={() => setCurrentTab(1)}
+          >
+            Headers
+          </div>
+          <div
+            style={currentTab === 2 ? activeCss : inActiveCss}
+            onClick={() => setCurrentTab(2)}
+          >
+            Body
+          </div>
+        </div>
+        {currentTab === 0 && (
+          <RequestParams url={urlstate.url} setUrlState={setUrlState} />
+        )}
+
+        {currentTab === 1 && <RequestHeaders />}
+
+        {currentTab === 2 && <RequestBody setJsonData={setJsonData} />}
+      </form>
+      <ResponseField response={apiResp} />
         {/* <div style={{ display: 'flex' }}>
           <label>
             Headers (JSON):
@@ -113,8 +169,8 @@ const RequestForm = () => {
           </label>
         </div> */}
 
-        <RequestParams urlstate={urlstate} setUrlState={setUrlState} handleChangeParams={handleChangeParams} />
-
+        {/* <RequestParams urlstate={urlstate} setUrlState={setUrlState} handleChangeParams={handleChangeParams} /> */}
+{/* 
         <Box>
           <Typography sx={{ my: 3, fontWeight: "bold" }}>Headers</Typography>
           <TextField
@@ -179,9 +235,8 @@ const RequestForm = () => {
             </Button>
           </Box>
         </Box>
-      </form>
+      </form> */}
 
-      <ResponseField response={apiResp} />
     </>
   );
 };

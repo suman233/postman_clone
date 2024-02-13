@@ -15,3 +15,9 @@ export type IAxiosResponse = {
   headers: Partial<RawAxiosRequestHeaders & AxiosHeaders>;
   status: number;
 };
+
+export type PostApiType = {
+  method: string;
+  url: string;
+  jsonData: string;
+};
